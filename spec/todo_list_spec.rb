@@ -1,23 +1,60 @@
 require_relative '../lib/todo_list'
 require_relative '../lib/todo_item'
+require 'stringio'
 
 describe ToDoList do
+	before do
+		@output = StringIO.new
+		@mylist = ToDoList.new
+		@wash_dishes = "wash the dishes"
+		@trash = "take out the trash"
+	end
 	
 	it "starts with a list of 0" do
-		mylist = ToDoList.new
-		mylist.size.should be 0
+		@mylist.size.should be 0
+	end
+
+	it "ititializes to empty" do
+		@mylist.should be_empty
 	end
 
 	context "with one todo added" do
+		before do
+			@mylist.add(@wash_dishes)
+		end
 		it "has a size of 1" do
-			mylist = ToDoList.new
-			wash_dishes = ToDoItem.new
-			mylist.add(wash_dishes)
-			mylist.size.should be 1
+			@mylist.size.should be 1
+		end
+
+		it "reports that it is no longer empty" do
+			@mylist.should_not be_empty
 		end
 	end
 
 	context "with two todos added" do
-		it "has a size of 2"
+		it "has a size of 2" do
+			@mylist.add(@wash_dishes)
+			@mylist.add(@trash)
+			@mylist.size.should be 2
+		end
+	end
+	context "with a populated list" do
+		before do
+			@mylist.add "Wash the dog"
+			@mylist.add "Clean the table"
+			@mylist.add "Clean bathroom"
+		end
+
+		it "lists the current todo items" do
+			@mylist.show(@output)
+			@output.seek(0)
+			@output.read.should match /1\. Wash the dog/
+		end
+
+		it "lets todos be selected by index" do
+			@output.print @mylist.select(2)
+			@output.seek 0
+			@output.read.should == "Clean the table"
+		end
 	end
 end
