@@ -1,0 +1,11 @@
+
+
+
+A simple todo list script to learn some ruby.
+
+Allows me to add new todo items.
+Allows me to mark them as done.
+
+Done items are listed separately from todos and can be purged at any time.
+
+Maintains todo lists across sessions and allows multiple todo lists.
