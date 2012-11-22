@@ -58,7 +58,7 @@ describe ToDoList do
 		end
 
 		it "tracks items that are done" do
-			@mylist.select(2).do(@mylist)
+			@mylist.select(2).do
 			@mylist.show_done(@output)
 			@output.seek 0
 			@output.read.should == "Clean the table\n"

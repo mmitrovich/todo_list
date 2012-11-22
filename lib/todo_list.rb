@@ -9,7 +9,7 @@ class ToDoList
 	end
 
 	def add(todo)
-		@list.push ToDoItem.new(todo)
+		@list.push ToDoItem.new(todo, self)
 	end
 
 	def size
@@ -44,5 +44,6 @@ mylist = ToDoList.new
 
 mylist.add("feed the fish")
 
-mylist.show
+mylist.show_todos
+
 end
