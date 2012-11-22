@@ -5,6 +5,7 @@ class ToDoList
 
 	def initialize
 		@list = []
+		@done = []
 	end
 
 	def add(todo)
@@ -19,12 +20,21 @@ class ToDoList
 		return @list.empty?
 	end
 
-	def show(dest = STDOUT)
+	def show_todos(dest = STDOUT)
 		@list.each_index {|index| dest.puts "#{index + 1}. #{@list[index]}"}
+	end
+
+	def show_done(dest = STDOUT)
+		@done.each {|item| dest.puts item}
 	end
 
 	def select(index)
 		return @list[index - 1]
+	end
+
+	def mark_done(item)
+		@done.push item
+		@list.delete item
 	end
 end
 

@@ -46,7 +46,7 @@ describe ToDoList do
 		end
 
 		it "lists the current todo items" do
-			@mylist.show(@output)
+			@mylist.show_todos(@output)
 			@output.seek(0)
 			@output.read.should match /1\. Wash the dog/
 		end
@@ -55,6 +55,13 @@ describe ToDoList do
 			@output.print @mylist.select(2)
 			@output.seek 0
 			@output.read.should == "Clean the table"
+		end
+
+		it "tracks items that are done" do
+			@mylist.select(2).do(@mylist)
+			@mylist.show_done(@output)
+			@output.seek 0
+			@output.read.should == "Clean the table\n"
 		end
 	end
 end
