@@ -18,6 +18,10 @@ describe ToDoList do
 		@mylist.should be_empty
 	end
 
+	it "raises an exception and does nothing for a blank todo" do
+		lambda { @mylist.add }.should raise_error
+	end
+
 	context "with one todo added" do
 		before do
 			@mylist.add(@wash_dishes)
@@ -62,6 +66,14 @@ describe ToDoList do
 			@mylist.show_done(@output)
 			@output.seek 0
 			@output.read.should == "Clean the table\n"
+		end
+
+		it "allows done items to be purged" do
+			@mylist.select(2).do
+			@mylist.purge_done
+			@mylist.show_done(@output)
+			@output.seek 0
+			@output.read.should == ""
 		end
 	end
 end

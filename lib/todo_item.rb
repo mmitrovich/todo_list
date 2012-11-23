@@ -1,12 +1,12 @@
 class ToDoItem
 
 	def initialize(desc, parent)
-		@desc = desc
+		@description = desc
 		@parent_list = parent
 	end
 
 	def to_s
-		return @desc
+		return @description
 	end
 
 	def do 
