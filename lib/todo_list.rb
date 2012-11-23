@@ -9,9 +9,10 @@ class ToDoList
 	end
 
 	def add(todo = "")
-		if todo == "" then raise EmptyTodo, "Cannot add empty todo items!\n\n" end
-
+		raise if todo =~ /^\s*$/
 		@list.push ToDoItem.new(todo, self)
+		rescue
+			puts "[Empty todo not added...]"
 	end
 
 	def size
@@ -61,7 +62,7 @@ mylist = ToDoList.new
 mylist.add("feed the fish")
 mylist.add("go shopping")
 mylist.add("wash dishes")
-mylist.add
+mylist.add "   "
 
 mylist.select(2).do
 

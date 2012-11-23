@@ -9,3 +9,4 @@ Allows me to mark them as done.
 Done items are listed separately from todos and can be purged at any time.
 
 Maintains todo lists across sessions and allows multiple todo lists.
+

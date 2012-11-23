@@ -18,8 +18,11 @@ describe ToDoList do
 		@mylist.should be_empty
 	end
 
-	it "raises an exception and does nothing for a blank todo" do
-		lambda { @mylist.add }.should raise_error
+	it "does not add a todo composed of only whitespace" do
+		@mylist.add @wash_dishes
+		@mylist.add ""
+		@mylist.add "   "
+		@mylist.size.should == 1
 	end
 
 	context "with one todo added" do
