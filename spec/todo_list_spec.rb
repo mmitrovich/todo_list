@@ -79,10 +79,43 @@ describe ToDoList do
 			@output.read.should == ""
 		end
 
-		it "initializes a save file"
-		it "loads saved lists"
-		it "updates the save file when adding new todos"
-		it "updates the save file when marking items done"
-		it "updates the save file when purging done items"
+
 	end
+
+	it "initializes a save file" do
+		@savetest = ToDoList.new("savetest")
+		@savetest.save
+		File.exist?("savetest.save").should be_true
+		File.delete("savetest.save")
+	end
+
+	it "loads saved lists" do
+		list1 = ToDoList.new("list1")
+		list1.add "write tests"
+		list1.add "pay bills"
+		list1.add "feed dog"
+		list1.select(2).do
+		list1.save
+
+		list2 = ToDoList.new("list1")
+		list2.load
+		list2.show_done(@output)
+		@output.rewind
+		@output.read.should == "pay bills\n"
+		File.delete "list1.save"
+	end
+	it "updates the save file when adding new todos" do
+		testlist = ToDoList.new("testlist")
+		testlist.add "go to work"
+
+		newlist = ToDoList.new("testlist")
+		newlist.load
+		newlist.show_todos(@output)
+		@output.rewind
+		@output.read.should == "1. go to work\n"
+		File.delete "testlist.save"
+	end
+
+	it "updates the save file when marking items done"
+	it "updates the save file when purging done items"
 end

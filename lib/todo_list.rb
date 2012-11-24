@@ -3,14 +3,24 @@ require_relative 'todo_item'
 class ToDoList
 
 
-	def initialize
+	def initialize(save_file="unnamed")
 		@list = []
 		@done = []
+		@save_file = save_file + '.save'
+	end
+
+	def save
+		File.open(@save_file, 'w') {|f| f.write Marshal.dump([@list,@done]) }
+	end
+
+	def load
+		@list,@done = Marshal.load(File.read(@save_file))
 	end
 
 	def add(todo = "")
 		raise if todo =~ /^\s*$/
 		@list.push ToDoItem.new(todo, self)
+		save
 		rescue
 			puts "[Empty todo not added...]"
 	end
