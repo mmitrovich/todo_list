@@ -79,6 +79,10 @@ describe ToDoList do
 			@output.read.should == ""
 		end
 
-		it "saves and loads todo lists"
+		it "initializes a save file"
+		it "loads saved lists"
+		it "updates the save file when adding new todos"
+		it "updates the save file when marking items done"
+		it "updates the save file when purging done items"
 	end
 end
