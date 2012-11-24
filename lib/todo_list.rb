@@ -70,4 +70,11 @@ mylist.show_all
 
 mylist.purge_done
 mylist.show_all
+
+File.open('mylist.save', 'w') {|f| f.write Marshal.dump(mylist) }
+
+newlist = Marshal.load File.read('mylist.save')
+
+puts "Newlist:"
+newlist.show_all
 end
