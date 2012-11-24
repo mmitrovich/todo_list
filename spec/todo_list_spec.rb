@@ -78,5 +78,7 @@ describe ToDoList do
 			@output.seek 0
 			@output.read.should == ""
 		end
+
+		it "saves and loads todo lists"
 	end
 end
