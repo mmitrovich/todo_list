@@ -48,6 +48,7 @@ class ToDoList
 	def mark_done(item)
 		@done.push item
 		@list.delete item
+		save
 	end
 
 	def show_all(dest = STDOUT)
@@ -62,6 +63,7 @@ class ToDoList
 
 	def purge_done
 		@done = []
+		save
 	end
 end
 

@@ -125,7 +125,31 @@ describe ToDoList do
 			@output.read.should == "1. go to work\n"
 		end
 
-		it "updates the save file when marking items done"
-		it "updates the save file when purging done items"
+		it "updates the save file when marking items done" do
+			@savetest.add @todo1
+			@savetest.add @todo2
+
+			@savetest.select(2).do
+
+			newlist = ToDoList.new("savetest")
+			newlist.load
+			newlist.show_done(@output)
+			@output.rewind
+			@output.read.should == "pay bills\n"
+		end
+
+		it "updates the save file when purging done items" do
+			@savetest.add @todo1
+			@savetest.add @todo2
+
+			@savetest.select(2).do
+			@savetest.purge_done
+
+			newlist = ToDoList.new("savetest")
+			newlist.load
+			newlist.show_done(@output)
+			@output.rewind
+			@output.read.should == ""
+		end
 	end # save/load context
 end
