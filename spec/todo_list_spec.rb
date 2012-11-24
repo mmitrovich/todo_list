@@ -81,41 +81,51 @@ describe ToDoList do
 
 
 	end
+	context "saving / loading" do 
+		before do
+			@savetest = ToDoList.new("savetest")
+			@list1 = ToDoList.new("list1")
+			@todo1 = "go to work"
+			@todo2 = "pay bills"
+			@todo3 = "feed dog"
+		end
 
-	it "initializes a save file" do
-		@savetest = ToDoList.new("savetest")
-		@savetest.save
-		File.exist?("savetest.save").should be_true
-		File.delete("savetest.save")
-	end
+		after do
+			files = ["savetest.save", "list1.save", "testlist.save", "unnamed.save"]
+			files.each do |file|
+				File.delete file if File.exist? file
+			end
+		end
 
-	it "loads saved lists" do
-		list1 = ToDoList.new("list1")
-		list1.add "write tests"
-		list1.add "pay bills"
-		list1.add "feed dog"
-		list1.select(2).do
-		list1.save
+		it "initializes a save file" do
+			@savetest.save
+			File.exist?("savetest.save").should be_true
+			File.delete("savetest.save")
+		end
 
-		list2 = ToDoList.new("list1")
-		list2.load
-		list2.show_done(@output)
-		@output.rewind
-		@output.read.should == "pay bills\n"
-		File.delete "list1.save"
-	end
-	it "updates the save file when adding new todos" do
-		testlist = ToDoList.new("testlist")
-		testlist.add "go to work"
+		it "loads saved lists" do@list1.add @todo1 
+			@list1.add @todo2 
+			@list1.add @todo3
+			@list1.select(2).do
+			@list1.save
 
-		newlist = ToDoList.new("testlist")
-		newlist.load
-		newlist.show_todos(@output)
-		@output.rewind
-		@output.read.should == "1. go to work\n"
-		File.delete "testlist.save"
-	end
+			list2 = ToDoList.new("list1")
+			list2.load
+			list2.show_done(@output)
+			@output.rewind
+			@output.read.should == "pay bills\n"
+		end
+		it "updates the save file when adding new todos" do
+			@savetest.add @todo1
 
-	it "updates the save file when marking items done"
-	it "updates the save file when purging done items"
+			newlist = ToDoList.new("savetest")
+			newlist.load
+			newlist.show_todos(@output)
+			@output.rewind
+			@output.read.should == "1. go to work\n"
+		end
+
+		it "updates the save file when marking items done"
+		it "updates the save file when purging done items"
+	end # save/load context
 end
